@@ -223,8 +223,8 @@
   }
 
   .story-divider {
-    width: 250px;
-    height: 350px;
+    width: auto;
+    height: 200px;
     margin-bottom: 2rem;
   }
 

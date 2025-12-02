@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daisy &amp; Jonathan – Wedding Invitation</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Daisy &amp; Jonathan – Wedding Invitation" />
+    <meta property="og:description" content="Join us in our special day!" />
+    <meta property="og:image" content="data/Session-Fotos/ImgBanner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Favicon (reemplaza con tu icono real) -->
+    <link rel="icon" href="data/icon.ico" type="image/x-icon" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-mobi.css" />
+</head>
+
+<body>
+    <!-- ======================
+       Navigation Bar
+       ====================== -->
+    <canvas id="leafCanvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute w-100" style="z-index: 1000;">
+        <div class="container">
+            <!-- Logo como imagen de Picsum -->
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="data/logo.png" alt="Logo" class="logo-img rounded-circle me-2" />
+                <span class="fw-bold nav-brand-text">Daisy &amp; Jonathan</span>
+            </a>
+            <!-- Toggler móvil -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list fs-2 text-white"></i>
+            </button>
+            <!-- Menú colapsado (sin fondo en desktop; fondo semitransparente solo en móvil) -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#our-story">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#details">Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#registry">Registry</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link rsvp-btn" href="https://forms.gle/sqXMn9qpNa39nHhi9">RSVP</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================
+       Hero Section (Home)
+       ====================== -->
+    <header id="home"
+        class="hero-section d-flex flex-column justify-content-center align-items-center text-white text-center">
+        <!-- Fondo con imagen de Picsum -->
+        <div class="hero-bg"></div>
+        <div class="overlay"></div>
+
+        <div class="container position-relative">
+            <!-- Título Principal: “Fernanda & David” (tamaño aumentado) -->
+            <h1 class="hero-title">Daisy &amp; Jonathan</h1>
+
+            <!-- Cita en español -->
+            <div class="quote-container mt-3">
+                <p class="quote-text">
+                    “You believe in ghosts, I believe in aliens — but the one thing we both believe in is each other.”
+                </p>
+                <p class="quote-author">— <em>Momo & Okarun (Based on DanDaDan)</em></p>
+            </div>
+
+            <!-- Fecha -->
+            <p class="hero-date mt-3">December 20, 2025</p>
+
+            <!-- Countdown Timer -->
+            <div id="countdown" class="countdown d-flex justify-content-center align-items-center mt-4">
+                <div class="time-box mx-2 text-center">
+                    <span id="days" class="time-number">00</span><br />
+                    <small>Days</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="hours" class="time-number">00</span><br />
+                    <small>Hours</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="minutes" class="time-number">00</span><br />
+                    <small>Minutes</small>
+                </div>
+                <div class="time-box mx-2 text-center">
+                    <span id="seconds" class="time-number">00</span><br />
+                    <small>Seconds</small>
+                </div>
+            </div>
+
+            <!-- Music HUD (ligeramente reducido) -->
+            <div class="music-hud-wrapper mt-4">
+                <div class="music-hud music-hud-small d-flex">
+                    <!-- Izquierda: Carátula del álbum -->
+                    <div class="music-album-art p-2">
+                        <img src="data/golden-hour.jpg" alt="Album Art" class="album-img" />
+                    </div>
+                    <!-- Derecha: Texto, barra de progreso y botón -->
+                    <div class="music-details flex-fill ps-3 pe-3">
+                        <div class="now-playing mb-1">Now Playing:</div>
+                        <div class="song-title mb-3">Golden Hour - JVKE</div>
+
+                        <!-- Barra de Progreso -->
+                        <div class="progress-container mb-2">
+                            <div class="bar-bg">
+                                <div id="progressFill" class="bar-fill"></div>
+                                <div id="thumb" class="bar-thumb"></div>
+                            </div>
+                        </div>
+                        <!-- Etiquetas de Tiempo -->
+                        <div class="time-labels d-flex justify-content-between mb-3">
+                            <span id="currentTime">0:00</span>
+                            <span id="durationTime">3:29</span>
+                        </div>
+                        <!-- Botón Circular de Play/Pause -->
+                        <div class="d-flex justify-content-center">
+                            <button id="audioToggle" class="btn-play">
+                                <i id="audioIcon" class="bi bi-play-fill"></i>
+                            </button>
+                        </div>
+                        <!-- Audio oculto -->
+                        <audio id="weddingSong" src="data/JVKE - golden hour (Lyrics).mp3" preload="metadata" autoplay
+                            loop></audio>
+                    </div>
+                </div>
+            </div>
+            <!-- /Music HUD -->
+        </div>
+    </header>
+
+    <!-- ======================
+       Our Story
+       ====================== -->
+    <section id="our-story" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-3">Our Story</h2>
+            <img src="data/Session-Fotos/dan-cats.png" alt="Divider" class="story-divider mx-auto d-block mb-4" />
+
+            <div class="mb-5">
+                <h3 class="story-subtitle">Jonathan's Story:</h3>
+                <p>
+                    I was always a romantic but never had anyone to really show myself to, or rather, no one cared.
+                    Then a mutual friend introduced us. The late night talks, and with the pandemic all we could only have video dates.
+                    We watched so many shows together. I wasn't falling in love with a girl, I was falling in love with my best friend.
+
+                    The world that seemed dark now filled with beautiful God's rays, the world that seemed monochrome, now had so much 
+                    vibrant color to it. She is my muse, my player 2, my angel of light. Quoting Coldplay's "My mirror, my sword and shield".
+                </p>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="story-subtitle">Daisy's Story:</h3>
+                <p>
+                    We met via friends, started talking over text. Having hours long video dates, talking about our future. I fell in love
+                    with your voice and the funny jokes you would tell me. I love the way you talk about your love of art. I know I'm marrying
+                    my best friend, someone I love with my whole heart and soul.
+                </p>
+            </div>
+
+
+            <!-- Proposal Video -->
+            <div class="mt-3">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://drive.google.com/file/d/1A875OQhSNAqvM2KJWXLwAcqEsbvMgXWu/preview"
+                        class="w-100 h-100" allow="autoplay; fullscreen" allowfullscreen>
+                    </iframe>
+                </div>
+                <small class="text-muted d-block mt-2">
+                    Tip: Make sure to pause background music before playing the video. Enjoy! ❤️
+                </small>
+            </div>
+
+
+
+        </div>
+    </section>
+
+    <!-- ======================
+       Event Details
+       ====================== -->
+    <section id="details" class="bg-secondary-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Event Details:</h2>
+            <div class="row text-center">
+                <div class="col-md-6 mb-4">
+                    <div class="detail-card p-4 h-100">
+                        <div class="icon mb-2">
+                            <i class="bi bi-peace-fill fs-2" style="color: #991dac;"></i>
+                        </div>
+                        <h3 class="detail-title">Marriage Ceremony</h3>
+                        <p class="fw-bold mb-1">December 20th, 2025</p>
+                        <p class="mb-1">Please be 30 minutes early.</p>
+                        <p><strong>NOTE:</strong> You must reserve your spot in advance as space is limited. Thank you
+                            ❤️</p>
+                        <p class="mb-1">Exlipse Salon</p>
+                        <p class="mb-3">816 Market, Laredo, TX 78046</p>
+                        <p class="mb-1"><strong>Dress Code:</strong></p>
+                        <p class="mb-3">Sunday Best or Formal</p>
+                        <p class="mb-1"><strong>Colors:</strong></p>
+                        <img src="data/colores.png" alt="Color Palette" class="img-fluid mb-3" />
+                        <a href="https://maps.app.goo.gl/V7NxqsYqnS4B3Tmt7" target="_blank"
+                            class="btn btn-primary btn-sm"><i class="bi bi-geo-alt-fill me-1"></i>Address</a>
+                        <a href="https://temple-online-scheduling.churchofjesuschrist.org/api/appointments/joinGroup/50661783?lang=eng"
+                            target="_blank" class="btn btn-primary btn-sm"><i
+                                class="bi bi-bookmark-fill me-1"></i>Schedule Appointment</a>
+                    </div>
+                </div>           
+            </div>
+    </section>
+
+    <!-- ======================
+       RSVP Section
+       ====================== -->
+    <section id="rsvp" class="py-5">
+        <div class="container text-center">
+            <h2 class="section-title mb-3">Location Map</h2>
+            <iframe class="minimap"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4197.810800571627!2d-99.49063292401334!3d27.50414083442382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x866123d849c3ef1d%3A0x9fdcbb316ad7659!2s816%20Market%20St%2C%20Laredo%2C%20TX%2078040!5e1!3m2!1sen!2sus!4v1764716705769!5m2!1sen!2sus"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <p class="mb-4">
+                Your presence would make our special day perfect. Let us know if you can celebrate with us!
+            </p>
+            <p class="mb-4"><em>Please respond before December 1st of 2025. We thank you deeply!</em></p>
+            <a href="https://forms.gle/sqXMn9qpNa39nHhi9" class="btn btn-primary btn-lg">
+                <i class="bi bi-envelope-fill me-1"></i>RSVP
+            </a>
+        </div>
+    </section>
+
+    <!-- ======================
+       Registry & Gift Codes
+       ====================== -->
+    <section id="registry" class="bg-secondary-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Wedding Gifts</h2>
+            <p class="text-center mb-5">
+                Please use the QR Codes below to send your gifts. We appreciate your love and support! ❤️
+            </p>
+            <div class="row justify-content-center gy-4">
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-currency-dollar text-primary me-1"></i>CashApp
+                    </h3>
+                    <img src="data/CashApp-QR.png" alt="CashApp QR" class="img-fluid rounded-2 border" />
+                </div>
+
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-paypal text-primary me-1"></i>PayPal
+                    </h3>
+                    <img src="data/Paypal-QR.jpeg" alt="PayPal QR" class="img-fluid rounded-2 border" />
+                </div>
+
+                <div class="col-6 col-md-4 text-center">
+                    <h3 class="registry-title mb-3">
+                        <i class="bi bi-paypal text-primary me-1"></i>Amazon List
+                    </h3>
+                    <button onclick="window.location.href='https://www.amazon.com/wedding/share/Obi-Wen';"
+                        class="btn btn-primary">
+                        <i class="bi bi-link-45-right me-1"></i>Go to Amazon List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================
+       Photo Gallery (Our Journey)
+       ====================== -->
+    <section id="gallery" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Our Journey</h2>
+            <p class="text-center mb-5">A little piece of our life for you. Enjoy every photo just as we did.</p>
+            <div class="row g-3">
+                <!-- Ocho imágenes de muestra con Picsum -->
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img01.jpeg" alt="Gallery 1" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img02.jpeg" alt="Gallery 2" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img03.jpeg" alt="Gallery 3" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img04.jpeg" alt="Gallery 4" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img05.jpeg" alt="Gallery 5" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img06.jpeg" alt="Gallery 6" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img07.jpeg" alt="Gallery 7" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img8.png" alt="Gallery 8" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img9.png" alt="Gallery 9" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img10.png" alt="Gallery 10" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img11.png" alt="Gallery 11" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-3">
+                    <div class="gallery-thumb">
+                        <img src="data/Session-Fotos/Img12.png" alt="Gallery 12" class="img-fluid album-img"
+                            data-bs-toggle="modal" data-bs-target="#imageModal" />
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Modal para imágenes a pantalla completa -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img src="" alt="Foto ampliada" id="modalImage" class="img-fluid"
+                        style="max-width: 90vw; max-height: 90vh; object-fit: contain;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional: Hidden RSVP Form Anchor -->
+    <section id="contact-form" class="py-5">
+        <div class="container">
+            <!-- Aquí podría ir tu formulario real de RSVP -->
+        </div>
+    </section>
+
+    <!-- ======================
+       Footer
+       ====================== -->
+    <footer class="text-center text-black py-4 bg-secondary-section">
+        <div class="container">
+            <p class="mb-1">
+                Hashtag:
+                <span class="fw-semibold text-black">#BestWedding2025</span>
+            </p>
+            <p>Made with <i class="bi bi-heart-fill text-danger"></i> for our special day.</p>
+            <p id="footer" class="mb-1">&copy; 2025 Daisy &amp; Jonathan Wedding</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
